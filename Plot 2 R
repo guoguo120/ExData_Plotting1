@@ -1,0 +1,14 @@
+hoc_All <- read.csv("~/household_power_consumption.txt", sep=";")
+hoc_All$Date<-as.Date(hoc_All$Date,format="%d/%m/%Y")
+
+hoc<-subset(hoc_All,subset=(Date>="2007/02/01"& Date <="2007/02/02"))
+> class(hoc$Global_active_power)
+[1] "character"
+> hoc$Global_active_power<-as.numeric(hoc$Global_active_power)
+
+> datetime <- paste(as.Date(hoc$Date), hoc$Time)
+> hoc$Datetime <- as.POSIXct(datetime)
+
+plot(hoc$Global_active_power~hoc$Datetime, ylab="Global Active Power (kilowatts)", xlab="", type="l")
+dev.copy(png,file="Plot 2.png",width=480,height=480)
+dev.off()
